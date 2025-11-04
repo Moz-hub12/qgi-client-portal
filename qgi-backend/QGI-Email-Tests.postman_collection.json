@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "QGI Email Tests",
+    "_postman_id": "qgi-email-tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/health/email",
+          "host": [
+            "{{BASE_URL}}"
+          ],
+          "path": [
+            "health",
+            "email"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Test Invite",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-notify-key",
+            "value": "{{NOTIFY_TEST_KEY}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"to\": \"you@example.com\", \"first_name\": \"Moses\", \"invite_link\": \"https://qgi.capital/portal/join\"}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/notify/test/invite",
+          "host": [
+            "{{BASE_URL}}"
+          ],
+          "path": [
+            "notify",
+            "test",
+            "invite"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Test KYC",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-notify-key",
+            "value": "{{NOTIFY_TEST_KEY}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"to\": \"you@example.com\", \"name\": \"Moses\", \"kyc_link\": \"https://qgi.capital/portal/kyc\"}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/notify/test/kyc",
+          "host": [
+            "{{BASE_URL}}"
+          ],
+          "path": [
+            "notify",
+            "test",
+            "kyc"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Test Admin Alert",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-notify-key",
+            "value": "{{NOTIFY_TEST_KEY}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"to\": \"ops@quantumgrowthinvestments.com\", \"subject\": \"Test Admin\", \"message\": \"This is a test from Postman\"}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/notify/test/admin-alert",
+          "host": [
+            "{{BASE_URL}}"
+          ],
+          "path": [
+            "notify",
+            "test",
+            "admin-alert"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5001"
+    },
+    {
+      "key": "NOTIFY_TEST_KEY",
+      "value": "set-a-strong-random-value"
+    }
+  ]
+}
