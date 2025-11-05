@@ -7,31 +7,36 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    // Use terser for better minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        // Remove console.log in production
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // Use esbuild for faster builds and better tree-shaking
+    minify: 'esbuild',
+    target: 'es2015',
+    cssCodeSplit: true,
+    sourcemap: false,
     // Manual chunking for better caching
     rollupOptions: {
       output: {
-        manualChunks: {
-          // React vendor chunk
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // Chart libraries
-          'chart-vendor': ['recharts'],
-          // Animation libraries
-          'animation-vendor': ['framer-motion'],
-          // UI components (if they're large enough)
-          // 'ui-vendor': ['@radix-ui/react-*'], // Uncomment if using many radix components
-        },
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // React and React-related libraries
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            // Lucide icons
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            // Radix UI components
+            if (id.includes('@radix-ui')) {
+              return 'ui-vendor';
+            }
+            // Recharts - keep in main bundle to avoid circular dependencies
+            // Other vendor libraries
+            return 'vendor';
+          }
+        }
       },
     },
-    // Increase chunk size warning limit (optional)
+    // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
   },
   resolve: {
