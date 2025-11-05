@@ -1,10 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect, createContext, useContext } from 'react'
 import { API_BASE_URL } from './config'
-import CompliancePage from './pages/CompliancePage'
-import ReportsPage from './pages/ReportsPage'
-
-
 
 // 🔐 Centralized auth storage helpers
 import {
@@ -13,6 +9,15 @@ import {
   clearToken as wipeToken,
   setAdminUser as storeAdminUser, // optional but handy
 } from './lib/authStorage'
+
+// Pages & layout - import at top to avoid hoisting issues
+import AdminLoginPage from './pages/AdminLoginPage'
+import DashboardV2 from './pages/DashboardV2'
+import ClientsPage from './pages/ClientsPage'
+import ClientDetailPage from './pages/ClientDetailPage'
+import CompliancePage from './pages/CompliancePage'
+import ReportsPage from './pages/ReportsPage'
+import AdminLayout from './components/AdminLayout'
 
 // Context for admin authentication
 const AdminAuthContext = createContext(null)
@@ -113,13 +118,6 @@ function AdminProtectedRoute({ children }) {
   if (!admin) return <Navigate to="/login" replace />
   return children
 }
-
-// Pages & layout
-import AdminLoginPage from './pages/AdminLoginPage'
-import DashboardV2 from './pages/DashboardV2'
-import ClientsPage from './pages/ClientsPage'
-import ClientDetailPage from './pages/ClientDetailPage'
-import AdminLayout from './components/AdminLayout'
 
 export default function App() {
   return (
